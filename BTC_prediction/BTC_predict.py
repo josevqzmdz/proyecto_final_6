@@ -46,7 +46,8 @@ selected coin in which the date is set as the index
         #
         price_matrix = np.ndarray(shape=(100, 100))
         for index in range(len(data) - (seq_len+1)):
-            price_matrix = np.vstack(data[index:index+seq_len])
+            price_matrix = np.stack(data[index:index+seq_len])
+            #print(price_matrix.shape)
         return price_matrix
 
     def normarlize_windows(self, window_data):
@@ -56,7 +57,7 @@ selected coin in which the date is set as the index
         '''
         normalised_data = []
         for window in window_data:
-            normalised_window = [((float(p) / float(window[0])) - 1) for p in window]
+            normalised_window = [((float(p) / float(window[0])) - 1) for p in window_data]
             normalised_data.append(normalised_window)
         return normalised_data
 
@@ -73,7 +74,7 @@ selected coin in which the date is set as the index
         row = len(kek)#
         #print(f"2): {row}")
         #print(price_matrix)
-        train = price_matrix[:row, :]#
+        train = price_matrix[:row, :]
         #train = price_matrix[:row, :-1]
         if shuffle == True:
             np.random.shuffle(train)
