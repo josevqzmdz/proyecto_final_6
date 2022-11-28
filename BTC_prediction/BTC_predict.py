@@ -64,14 +64,19 @@ selected coin in which the date is set as the index
         It makes a custom train test split where the last part is kept
          as the training set.
         '''
-        price_matrix = np.array(price_matrix)
-        # print(price_matrix.shape)
-        row = int(round(train_size * len(price_matrix)))
+        price_matrix = np.array(price_matrix)#
+        size = price_matrix.size
+        kek = train_size * size
+        #print(f"1): {kek}")
+        row = len(kek)#
+        #print(f"2): {row}")
+        #print(price_matrix)
+        #train = price_matrix[:row, :]#
         train = price_matrix[:row, :]
         if shuffle == True:
             np.random.shuffle(train)
         X_train, y_train = train[:row, :-1], train[:row, -1]
-        X_test, y_test = price_matrix[row:, :-1], price_matrix[row:, -1]
+        X_test, y_test = price_matrix[row:, :-1], price_matrix[row:, -1]#
         X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         if return_row:
