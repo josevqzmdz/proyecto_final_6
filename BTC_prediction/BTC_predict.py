@@ -42,9 +42,11 @@ selected coin in which the date is set as the index
         '''
             It converts the series into a nested list where every item of the list contains historic prices of 30 days
         '''
-        price_matrix = []
-        for index in range(len(data) - seq_len+1):
-            price_matrix.append(data[index:index+seq_len])
+        # https://www.statology.org/numpy-ndarray-object-has-no-attribute-append/
+        #
+        price_matrix = np.ndarray(shape=(100, 100))
+        for index in range(len(data) - (seq_len+1)):
+            price_matrix = np.vstack(data[index:index+seq_len])
         return price_matrix
 
     def normarlize_windows(self, window_data):
@@ -71,8 +73,8 @@ selected coin in which the date is set as the index
         row = len(kek)#
         #print(f"2): {row}")
         #print(price_matrix)
-        #train = price_matrix[:row, :]#
-        train = price_matrix[:row, :]
+        train = price_matrix[:row, :]#
+        #train = price_matrix[:row, :-1]
         if shuffle == True:
             np.random.shuffle(train)
         X_train, y_train = train[:row, :-1], train[:row, -1]
